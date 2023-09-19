@@ -1,4 +1,4 @@
-namespace edxuepg.pong
+namespace EDXUEPG.Pong
 {
     public enum GameStates
     {

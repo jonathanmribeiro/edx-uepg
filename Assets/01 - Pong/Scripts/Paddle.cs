@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace edxuepg.pong
+namespace EDXUEPG.Pong
 {
     public class Paddle : MonoBehaviour
     {

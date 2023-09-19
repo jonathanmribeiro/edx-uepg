@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace edxuepg.pong
+namespace EDXUEPG.Pong
 {
     public class Main : MonoBehaviour
     {
