@@ -9,6 +9,9 @@ namespace edxuepg.pong
         public bool HitLeftKillzone;
         public bool HitRightKillzone;
 
+        /// <summary>
+        /// Coloca a bola novamente no centro da tela e calcula uma nova direção para ela.
+        /// </summary>
         public void Reposition()
         {
             transform.position = Vector3.zero;
@@ -17,6 +20,9 @@ namespace edxuepg.pong
             HitRightKillzone = false;
         }
 
+        /// <summary>
+        /// Atualização do movimento da bola.
+        /// </summary>
         public void UpdateBall()
         {
             transform.Translate(Speed * Time.deltaTime * Direction);

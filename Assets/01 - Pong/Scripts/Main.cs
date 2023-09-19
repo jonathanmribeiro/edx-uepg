@@ -25,6 +25,9 @@ namespace edxuepg.pong
         public TMP_Text RightScoreUI;
         public float RightScore;
 
+        /// <summary>
+        /// Método de inicialização do exemplo.
+        /// </summary>
         private void Start()
         {
             LeftPaddle.Speed = 3;
@@ -37,6 +40,9 @@ namespace edxuepg.pong
             PlayUI.SetActive(true);
         }
 
+        /// <summary>
+        /// Loop principal. Chama os métodos de atualização de acordo com o estado atual.
+        /// </summary>
         private void Update()
         {
             if (GameState == GameStates.Start)
@@ -60,6 +66,9 @@ namespace edxuepg.pong
             RightScoreUI.text = RightScore.ToString();
         }
 
+        /// <summary>
+        /// Atualizador no estado de Start.
+        /// </summary>
         private void UpdateStartState()
         {
             StartUI.SetActive(true);
@@ -73,6 +82,9 @@ namespace edxuepg.pong
             }
         }
 
+        /// <summary>
+        /// Atualizador no estado de Serve.
+        /// </summary>
         private void UpdateServeState()
         {
             StartUI.SetActive(false);
@@ -88,62 +100,40 @@ namespace edxuepg.pong
             Ball.Reposition();
         }
 
+        /// <summary>
+        /// Atualizador no estado de Play.
+        /// </summary>
         private void UpdatePlayState()
         {
             StartUI.SetActive(false);
             ServeUI.SetActive(false);
             DoneUI.SetActive(false);
 
-            bool keyUpPressed = Input.GetKey(KeyCode.UpArrow);
-            bool keyDownPressed = Input.GetKey(KeyCode.DownArrow);
-
-            if (keyUpPressed)
-            {
-                _rightPaddleDirection = 1;
-            }
-            else if (keyDownPressed)
-            {
-                _rightPaddleDirection = -1;
-            }
-            else
-            {
-                _rightPaddleDirection = 0;
-            }
-
+            _rightPaddleDirection = ComputeDirectionFromInputs(KeyCode.UpArrow, KeyCode.DownArrow);
+            
             RightPaddle.UpdatePaddle(_rightPaddleDirection);
 
-            bool keyWPressed = Input.GetKey(KeyCode.W);
-            bool keySPressed = Input.GetKey(KeyCode.S);
-
-            if (keyWPressed)
-            {
-                _leftPaddleDirection = 1;
-            }
-            else if (keySPressed)
-            {
-                _leftPaddleDirection = -1;
-            }
-            else
-            {
-                _leftPaddleDirection = 0;
-            }
-
+            _leftPaddleDirection = ComputeDirectionFromInputs(KeyCode.W, KeyCode.S);
+            
             LeftPaddle.UpdatePaddle(_leftPaddleDirection);
 
             Ball.UpdateBall();
 
             if (Ball.HitLeftKillzone)
             {
-                RightScore = RightScore + 1;
+                RightScore++;
                 GameState = GameStates.Done;
             }
             else if (Ball.HitRightKillzone)
             {
-                LeftScore = LeftScore + 1;
+                LeftScore++;
                 GameState = GameStates.Done;
             }
         }
 
+        /// <summary>
+        /// Atualizador no estado de Done.
+        /// </summary>
         private void UpdateDoneState()
         {
             StartUI.SetActive(false);
@@ -154,6 +144,31 @@ namespace edxuepg.pong
             {
                 GameState = GameStates.Serve;
                 return;
+            }
+        }
+
+        /// <summary>
+        /// Usado no método de atualização do estado Play. Calcula uma direção (-1, 0, 1) de acordo com a entrada.
+        /// </summary>
+        /// <param name="upKey">[UpArrow, W]</param>
+        /// <param name="downKey">[DownArrow, S]</param>
+        /// <returns></returns>
+        private float ComputeDirectionFromInputs(KeyCode upKey, KeyCode downKey)
+        {
+            bool keyUpPressed = Input.GetKey(upKey);
+            bool keyDownPressed = Input.GetKey(downKey);
+
+            if (keyUpPressed)
+            {
+                return 1;
+            }
+            else if (keyDownPressed)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
             }
         }
     }

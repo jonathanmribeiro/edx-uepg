@@ -13,8 +13,8 @@ namespace edxuepg.pong
 
         public void UpdatePaddle(float inputDirection)
         {
-            Vector2 direction = new Vector2(0, inputDirection);
-            transform.Translate(direction * Time.deltaTime * Speed);
+            Vector2 direction = new(0, inputDirection);
+            transform.Translate(Speed * Time.deltaTime * direction);
         }
     }
 }
